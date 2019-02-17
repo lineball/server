@@ -3,14 +3,14 @@
 https://en.wikipedia.org/wiki/Paper_soccer
 
 ## Terminology
-* pitch - area consisting of dots, boundaries and goals on which the players move
+* field - area consisting of dots, boundaries and goals on which the players move
 * move - a single change of a player's position
 * turn - one or more moves after which the right to take the next move takes over the player
-* player - moves 
+* player - moves
 * players - 
     * Black - player on the first position, starts the game
     * White - player on the second position
-* round - Gameplay between two players ending with the win of one of the players
+* game - round gameplay between two players ending with the win of one of the players
 * dot -  the point on the pitch
     * fresh - not yet visited during the round
     * current - point where the game is currently
