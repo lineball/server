@@ -1,7 +1,7 @@
 # First player make his first move
 
 ## Narrative:
-As a player who start game
+As a player who starts game
 I want to make first move  
 So that current game position changes  
 
