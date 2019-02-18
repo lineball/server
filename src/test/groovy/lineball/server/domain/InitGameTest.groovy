@@ -5,7 +5,7 @@ import spock.lang.Specification
 class InitGameTest extends Specification {
     def "Game starts with two players"() {
         given: "New field is created"
-        and: "first and second players enters the field"
+        and: "first and second player enter the field"
         when: "first player (white) init game"
         then: "second player got event and can start game"
     }
