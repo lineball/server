@@ -10,7 +10,7 @@ https://en.wikipedia.org/wiki/Paper_soccer
 * players - 
     * Black - player on the first position, starts the game
     * White - player on the second position
-* game - round gameplay between two players ending with the win of one of the players
+* game - round between two players ending with the win one of the players
 * dot -  the point on the pitch
     * fresh - not yet visited during the round
     * current - point where the game is currently
