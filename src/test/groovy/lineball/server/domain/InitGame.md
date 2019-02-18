@@ -7,7 +7,7 @@ So that second player can accept and game starts
 
 ## Scenario 1: Game starts with two players
 Given: new field is created  
-And: first and second players enters the field  
+And: first and second player enter the field  
 When: first player (white) init game  
 Then: second player got event and can start game  
 
