@@ -12,5 +12,18 @@ jobs: # a collection of steps
       - checkout
 
       - run: chmod +x gradlew
+
+      - restore_cache:
+                keys:
+                - v1-dependencies-{{ checksum "build.gradle" }}
+                # fallback to using the latest cache if no exact match is found
+                - v1-dependencies-
+
       - run: ./gradlew dependencies
+
+       - save_cache:
+                 paths:
+                   - ~/.m2
+                 key: v1-dependencies-{{ checksum "build.gradle" }}
+
       - run: ./gradlew test
