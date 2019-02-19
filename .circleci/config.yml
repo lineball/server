@@ -11,4 +11,6 @@ jobs: # a collection of steps
 
       - checkout
 
-      - run: mvn clean test
+      - run: chmod +x gradlew
+      - run: ./gradlew dependencies
+      - run: ./gradlew test
