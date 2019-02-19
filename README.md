@@ -1,5 +1,5 @@
 
-##Game rules
+## Game rules
 https://en.wikipedia.org/wiki/Paper_soccer
 
 ## Terminology
@@ -8,8 +8,8 @@ https://en.wikipedia.org/wiki/Paper_soccer
 * turn - one or more moves after which the right to take the next move takes over the player
 * player - moves
 * players - 
-    * Black - player on the first position, starts the game
-    * White - player on the second position
+    * White - player on the first position, starts the game
+    * Black - player on the second position
 * game - round between two players ending with the win one of the players
 * dot -  the point on the pitch
     * fresh - not yet visited during the round
