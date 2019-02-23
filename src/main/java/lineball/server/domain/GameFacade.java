@@ -1,4 +1,4 @@
 package lineball.server.domain;
 
-public class GameFasade {
+public class GameFacade {
 }
