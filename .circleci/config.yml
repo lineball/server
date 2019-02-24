@@ -12,6 +12,15 @@ jobs: # a collection of steps
       - run: chmod +x gradlew
       - run: ./gradlew dependencies
       - run: ./gradlew test
+      - run:
+          name: Sonar analyze
+          command: |
+            ./gradlew sonarqube \
+              -Dsonar.projectKey=lineball \
+              -Dsonar.organization=lineball \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.login=b9e0aa952da974af23e2f676bfbf7e63780e099e \
+              -Dsonar.java.source=1.11
   deploy:
     machine:
         enabled: true
@@ -32,3 +41,6 @@ workflows:
       - deploy:
           requires:
             - build
+          filters:
+            branches:
+              only: master
