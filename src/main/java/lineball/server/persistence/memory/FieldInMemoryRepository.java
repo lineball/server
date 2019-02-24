@@ -20,7 +20,9 @@ public class FieldInMemoryRepository implements FieldRepository {
 
     @Override
     public Optional<Field> getByPlayerId(UUID playerId) {
-        return map.values().stream().filter(f -> f.hasPlayerOn(playerId)).findFirst();
+        return map.values().stream()
+                .filter(f -> f.hasPlayerOn(playerId))
+                .findFirst();
     }
 
     @Override

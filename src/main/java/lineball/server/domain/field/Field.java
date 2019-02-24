@@ -39,6 +39,7 @@ public class Field {
     }
 
     public boolean hasPlayerOn(UUID playerId) {
-        return white.getId().equals(playerId) || black.getId().equals(playerId);
+        return (Objects.nonNull(white) && white.getId().equals(playerId)) ||
+                (Objects.nonNull(black) && black.getId().equals(playerId));
     }
 }
