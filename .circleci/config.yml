@@ -19,7 +19,7 @@ jobs: # a collection of steps
               -Dsonar.projectKey=lineball \
               -Dsonar.organization=lineball \
               -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.login=b9e0aa952da974af23e2f676bfbf7e63780e099e \
+              -Dsonar.login=$SONAR_LOGIN \
               -Dsonar.java.source=1.11
   deploy:
     machine:
