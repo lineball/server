@@ -1,0 +1,30 @@
+class Dot{
+    int x;
+    int y;
+    boolean wasVisited;
+
+    boolean isLegal(){
+        return false;
+    }
+
+    boolean canConnectWith(Dot nextDot){
+        return false;
+    }
+}
+
+class Path{
+    LinkedList<Dot> gamePath;
+
+    boolean moveWasMadeBefore(Dot fromDot, Dot toDot){
+        return false;
+    }
+    
+    void reverseMove(){
+        
+    }
+    
+    void addMove(){
+        
+    }
+    
+}
