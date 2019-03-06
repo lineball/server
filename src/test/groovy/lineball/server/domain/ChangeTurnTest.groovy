@@ -5,6 +5,7 @@ import spock.lang.Specification
 class ChangeTurnTest extends Specification {
 
     def "Turn changes after finishing in dot that was not used before"() {
+        given: "New game started"
         when: "White plays(1,0)"
         then: "It is black to move"
     }
