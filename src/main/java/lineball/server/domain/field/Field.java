@@ -1,6 +1,7 @@
 package lineball.server.domain.field;
 
 import lineball.server.domain.DomainException;
+import lineball.server.domain.Path;
 import lineball.server.domain.Player;
 import lombok.Getter;
 
@@ -13,9 +14,12 @@ public class Field {
     private UUID id;
     private Player white;
     private Player black;
+    @Getter
+    private Path path;
 
     public Field(UUID id) {
         this.id = id;
+        this.path = new Path();
     }
 
     public void enter(Player player) {
@@ -28,11 +32,11 @@ public class Field {
         }
     }
 
-    public void readyToStart(UUID playerId) {
-
+    public void readyToStart() {
+        throw new UnsupportedOperationException();
     }
 
-    public void startGame(UUID playerId) {
+    public void startGame() {
         if (Objects.isNull(white) || Objects.isNull(black)) {
             throw new DomainException("Cannot init game without second player");
         }
