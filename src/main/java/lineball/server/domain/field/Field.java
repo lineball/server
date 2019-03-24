@@ -32,11 +32,11 @@ public class Field {
         }
     }
 
-    public void readyToStart() {
-        throw new UnsupportedOperationException();
+    public void readyToStart(UUID playerId) {
+
     }
 
-    public void startGame() {
+    public void startGame(UUID playerId) {
         if (Objects.isNull(white) || Objects.isNull(black)) {
             throw new DomainException("Cannot init game without second player");
         }
