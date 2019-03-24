@@ -1,5 +1,6 @@
 package lineball.server.domain.dot;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Value;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Value
 @Getter
+@EqualsAndHashCode(exclude = "dots")
 public class Dot {
   int x;
   int y;
