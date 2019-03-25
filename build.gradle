@@ -2,9 +2,12 @@ plugins {
     id 'org.springframework.boot' version '2.1.2.RELEASE'
     id 'java'
     id 'groovy'
+    id "org.sonarqube" version "2.7"
+    id 'checkstyle'
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "org.sonarqube"
 
 group = 'lineball'
 version = '0.0.1-SNAPSHOT'
