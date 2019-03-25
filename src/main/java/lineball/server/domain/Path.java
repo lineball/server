@@ -22,7 +22,9 @@ public class Path {
     if (dot.isEnd()) {
       throw new DomainException("End game");
     }
-    if(dots.getLast().isAccessible(dot) && !dots.contains(dot)) {
+    int i = dots.indexOf(dot);
+    dot = i == -1 ? dot : dots.get(i);
+    if(dots.getLast().isAccessible(dot)) {
       dots.getLast().addToConnected(dot);
       dots.add(dot);
       return;

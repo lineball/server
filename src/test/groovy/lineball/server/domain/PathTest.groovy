@@ -95,13 +95,14 @@ class PathTest extends Specification {
         def dot2 = new Dot(0,2)
         def dot3 = new Dot(1,2)
         def dot4 = new Dot(0,1)
+        def dot5 = new Dot(0,0)
 
         when:
         path.addDot(dot)
         path.addDot(dot2)
         path.addDot(dot3)
         path.addDot(dot4)
-
+        path.addDot(dot5)
         then:
         def domainException = thrown(DomainException)
         domainException.message == 'Cannot add dot to path'

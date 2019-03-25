@@ -38,12 +38,20 @@ public class Dot {
     } else if (isBorderGoal()) {
       return Math.abs(dot.getY()) < Math.abs(y) && canMove(dot);
     }
-    return canMove(dot) && !dots.contains(dot);
+    return canMove(dot) && isConnected(dot);
   }
 
   private boolean canMove(Dot dot) {
-    return (Math.abs(dot.getX() - this.x) <= 1) &&
-    (Math.abs(dot.getY() - this.y) <= 1);
+    int dx = Math.abs(dot.getX() - this.x);
+    int dy = Math.abs(dot.getY() - this.y);
+    return dx <= 1  && dy <= 1 &&
+            (dx > 0 || dy > 0);
+  }
+
+  private boolean isConnected(Dot dot) {
+    int indexOfThis = dots.indexOf(dot);
+    int indexOfDot = dot.getDots().indexOf(this);
+    return indexOfThis == -1 && indexOfDot == -1;
   }
 
   private boolean isBorderSide() {
