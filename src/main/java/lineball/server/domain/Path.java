@@ -20,15 +20,8 @@ public class Path {
 
   public void addDot(Dot dot) {
     Dot newDot = findDotInPath(dot);
-    if (newDot.isEnd()) {
-      throw new DomainException("End game");
-    }
-    if(dots.getLast().isAccessible(newDot)) {
-      dots.getLast().addToConnected(newDot);
-      dots.add(newDot);
-      return;
-    }
-    throw new DomainException("Cannot add dot to path");
+    dots.getLast().addToConnected(newDot);
+    dots.add(newDot);
   }
 
   public void removeDot() {

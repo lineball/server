@@ -1,5 +1,6 @@
 package lineball.server.domain.dot;
 
+import lineball.server.domain.DomainException;
 import lombok.*;
 
 import java.util.*;
@@ -20,15 +21,16 @@ public class Dot {
     this.dots = new HashSet<>();
   }
 
-  public boolean isEnd() {
-    return ((Math.abs(x) == FIELD_WIDTH && Math.abs(y) == FIELD_HEIGHT) ||
-            Math.abs(y) == GOAL_LINE) || isNotMoveFromSideOrGoalLine() ||
-            this.getDots().size() == 7;
-  }
-
   public void addToConnected(Dot dot) {
-    dots.add(dot);
-    dot.getDots().add(this);
+    if (dot.isEnd()) {
+      throw new DomainException("End game");
+    }
+    if(isAccessible(dot)) {
+      dots.add(dot);
+      dot.getDots().add(this);
+      return;
+    }
+    throw new DomainException("Cannot add dot to path");
   }
 
   private boolean isNotMoveFromSideOrGoalLine() {
@@ -41,7 +43,6 @@ public class Dot {
   }
 
   public boolean isAccessible(Dot dot) {
-
     if (isSideLine()) {
       return Math.abs(dot.getX()) < Math.abs(x) && canMove(dot);
     } else if (isGoalLine()) {
@@ -67,6 +68,12 @@ public class Dot {
 
   private boolean isGoalLine() {
     return Math.abs(y) == FIELD_HEIGHT &&
-           Math.abs(x) >= 1 && Math.abs(x)< FIELD_WIDTH;
+            Math.abs(x) >= 1 && Math.abs(x)< FIELD_WIDTH;
+  }
+
+  private boolean isEnd() {
+    return ((Math.abs(x) == FIELD_WIDTH && Math.abs(y) == FIELD_HEIGHT) ||
+            Math.abs(y) == GOAL_LINE) || isNotMoveFromSideOrGoalLine() ||
+            this.getDots().size() == 7;
   }
 }
