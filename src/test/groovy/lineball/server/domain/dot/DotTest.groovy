@@ -5,10 +5,6 @@ import spock.lang.Specification
 
 class DotTest extends Specification {
 
-    def "IsEnd"() {
-
-    }
-
     def "shouldNotAccessToDotWithMoreThan2moves"() {
         given:
 
@@ -46,7 +42,7 @@ class DotTest extends Specification {
         Assert.assertFalse(isAccessible)
     }
 
-    def "shouldNotMoveAfterBorder"() {
+    def "shouldNotMoveOutsideBorder"() {
         given:
         Dot from = new Dot(4,0)
         Dot to = new Dot(5,0)

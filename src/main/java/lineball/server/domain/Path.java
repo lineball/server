@@ -2,8 +2,8 @@ package lineball.server.domain;
 
 import lineball.server.domain.dot.Dot;
 
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Path {
 
@@ -14,19 +14,18 @@ public class Path {
     dots.add(new Dot(0,0));
   }
 
-  public List<Dot> getDots() {
+  public Deque<Dot> getDots() {
     return new LinkedList<>(dots);
   }
 
   public void addDot(Dot dot) {
-    if (dot.isEnd()) {
+    Dot newDot = findDotInPath(dot);
+    if (newDot.isEnd()) {
       throw new DomainException("End game");
     }
-    int i = dots.indexOf(dot);
-    dot = i == -1 ? dot : dots.get(i);
-    if(dots.getLast().isAccessible(dot)) {
-      dots.getLast().addToConnected(dot);
-      dots.add(dot);
+    if(dots.getLast().isAccessible(newDot)) {
+      dots.getLast().addToConnected(newDot);
+      dots.add(newDot);
       return;
     }
     throw new DomainException("Cannot add dot to path");
@@ -34,7 +33,13 @@ public class Path {
 
   public void removeDot() {
     if (!dots.isEmpty()) {
-      dots.removeLast();
+      Dot dot = dots.removeLast();
+      dots.forEach(d -> d.getDots().remove(dot));
     }
+  }
+
+  private Dot findDotInPath(Dot dot) {
+    int i = dots.indexOf(dot);
+    return i == -1 ? dot : dots.get(i);
   }
 }
