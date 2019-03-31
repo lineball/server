@@ -27,7 +27,7 @@ class GoalTest extends Specification {
         field.addMovePlayer(player1, new Dot(0,6))
         then: "White wins game"
         def exception = thrown(DomainException)
-        exception.message == 'End game'
+        exception.message == 'Player: ' + player1.getId() + ' won game'
     }
 
     def "Black wins after scoring goal"() {
@@ -44,7 +44,7 @@ class GoalTest extends Specification {
         field.addMovePlayer(player2, new Dot(0,-6))
         then: "Black wins game"
         def exception = thrown(DomainException)
-        exception.message == 'End game'
+        exception.message == 'Player: ' + player2.getId() + ' won game'
     }
 
 }

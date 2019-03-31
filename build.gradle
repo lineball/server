@@ -28,3 +28,9 @@ dependencies {
             'org.spockframework:spock-core:1.2-groovy-2.5'
     )
 }
+
+sonarqube {
+    properties {
+        property 'sonar.tests', ['src/test/groovy', 'src/test/java']
+    }
+}

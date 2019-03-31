@@ -25,8 +25,8 @@ class ReverseMoveTest extends Specification {
         then: "White can reverse last move"
         field.revertMovePlayer(player1)
         noExceptionThrown()
-        field.getWhoCanMove().get(player1.getId())
-        !field.getWhoCanMove().get(player2.getId())
+        field.currentPlayer != player2
+        field.currentPlayer == player1
     }
 
     def "Player cannot reverse opponent move"() {

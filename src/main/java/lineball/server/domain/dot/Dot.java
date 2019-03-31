@@ -1,6 +1,8 @@
 package lineball.server.domain.dot;
 
 import lineball.server.domain.DomainException;
+import lineball.server.domain.exception.DeadDotException;
+import lineball.server.domain.exception.GoalDotException;
 import lombok.*;
 
 import java.util.*;
@@ -22,8 +24,11 @@ public class Dot {
   }
 
   public void addToConnected(Dot dot) {
-    if (dot.isEnd()) {
-      throw new DomainException("End game");
+    if (dot.isLoseMove()) {
+      throw new DeadDotException("looses game");
+    }
+    if (dot.isWinMove()) {
+      throw new GoalDotException("won game");
     }
     if(isAccessible(dot)) {
       dots.add(dot);
@@ -43,22 +48,20 @@ public class Dot {
   }
 
   public boolean isAccessible(Dot dot) {
-    if (isSideLine()) {
-      return Math.abs(dot.getX()) < Math.abs(x) && canMove(dot);
-    } else if (isGoalLine()) {
-      return Math.abs(dot.getY()) < Math.abs(y) && canMove(dot);
-    }
-    return canMove(dot) && isConnected(dot);
+
+    return canMove( dot )
+            && !(isSideLine() && dot.getX() >= x)
+            && !(isGoalLine() && dot.getY() >= y)
+            && canConnectWith(dot);
   }
 
   private boolean canMove(Dot dot) {
-    int dx = Math.abs(dot.getX() - this.x);
-    int dy = Math.abs(dot.getY() - this.y);
-    return dx <= 1  && dy <= 1 &&
-            (dx > 0 || dy > 0);
+    return Math.abs(dot.getX() - this.x) <= 1 &&
+           Math.abs(dot.getY() - this.y) <= 1 &&
+           !this.equals(dot);
   }
 
-  private boolean isConnected(Dot dot) {
+  private boolean canConnectWith(Dot dot) {
     return !(dots.contains(dot) || dot.getDots().contains(this));
   }
 
@@ -68,12 +71,16 @@ public class Dot {
 
   private boolean isGoalLine() {
     return Math.abs(y) == FIELD_HEIGHT &&
-            Math.abs(x) >= 1 && Math.abs(x)< FIELD_WIDTH;
+           Math.abs(x) >= 1 && Math.abs(x)< FIELD_WIDTH;
   }
 
-  private boolean isEnd() {
-    return ((Math.abs(x) == FIELD_WIDTH && Math.abs(y) == FIELD_HEIGHT) ||
-            Math.abs(y) == GOAL_LINE) || isNotMoveFromSideOrGoalLine() ||
+  private boolean isLoseMove() {
+    return (Math.abs(x) == FIELD_WIDTH && Math.abs(y) == FIELD_HEIGHT) ||
+            isNotMoveFromSideOrGoalLine() ||
             this.getDots().size() == 7;
+  }
+
+  private boolean isWinMove() {
+   return Math.abs(y) == GOAL_LINE;
   }
 }

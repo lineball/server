@@ -27,7 +27,7 @@ class DeadEndTest extends Specification {
         field.addMovePlayer(player1, new Dot(4,5))
         then: "White looses game"
         def domainException = thrown(DomainException)
-        domainException.message == 'End game'
+        domainException.message == 'Player: ' + player1.getId() + ' looses game'
     }
 
     def "Black looses after scoring sideline dead end"() {
@@ -45,7 +45,7 @@ class DeadEndTest extends Specification {
         field.addMovePlayer(player2, new Dot(4,1))
         then: "Black looses game (no more legal moves possible)"
         def domainException = thrown(DomainException)
-        domainException.message == 'End game'
+        domainException.message == 'Player: ' + player2.getId() + ' looses game'
     }
 
     def "Black looses after scoring central dot dead end"() {
@@ -67,7 +67,8 @@ class DeadEndTest extends Specification {
         when: "White plays(0,0)"
         field.addMovePlayer(player1, new Dot(0,0))
         then: "White looses game (no more legal moves possible)"
-        thrown(DomainException)
+        def domainException = thrown(DomainException)
+        domainException.message == 'Player: ' + player1.getId() + ' looses game'
     }
 
 }

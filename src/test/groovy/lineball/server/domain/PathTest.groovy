@@ -62,7 +62,7 @@ class PathTest extends Specification {
 
         then:
         def domainException = thrown(DomainException)
-        domainException.message == 'End game'
+        domainException.message == 'won game'
     }
 
     def "Simple success path down"() {
@@ -85,7 +85,7 @@ class PathTest extends Specification {
 
         then:
         def domainException = thrown(DomainException)
-        domainException.message == 'End game'
+        domainException.message == 'won game'
     }
 
     def "Cannot move to dot in path"() {

@@ -27,7 +27,7 @@ class OwnGoalTest extends Specification {
         field.addMovePlayer(player1, new Dot(0,-6))
         then: "White looses game"
         def exception = thrown(DomainException)
-        exception.message == 'End game'
+        exception.message == 'Player: ' + player1.getId() + ' looses game'
     }
 
     def "Black looses after scoring own goal"() {
@@ -44,7 +44,7 @@ class OwnGoalTest extends Specification {
         field.addMovePlayer(player2, new Dot(0,6))
         then: "Black looses game"
         def exception = thrown(DomainException)
-        exception.message == 'End game'
+        exception.message == 'Player: ' + player2.getId() + ' looses game'
     }
 
 }

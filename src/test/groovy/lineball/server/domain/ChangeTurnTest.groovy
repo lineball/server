@@ -21,8 +21,8 @@ class ChangeTurnTest extends Specification {
         when: "White plays(1,0)"
         field.addMovePlayer(player1, new Dot(1,0))
         then: "It is black to move"
-        field.whoCanMove.get(player2.getId())
-        !field.whoCanMove.get(player1.getId())
+        field.currentPlayer == player2
+        field.currentPlayer != player1
     }
 
     def "Player continue their turn after hitting dot that was used before"() {
@@ -35,8 +35,8 @@ class ChangeTurnTest extends Specification {
         when: "White plays(0,0)"
         field.addMovePlayer(player1, new Dot(0,0))
         then: "It is still white to move"
-        !field.whoCanMove.get(player2.getId())
-        field.whoCanMove.get(player1.getId())
+        field.currentPlayer != player2
+        field.currentPlayer == player1
     }
 
     def "Player continue their turn after hitting sideline"() {
@@ -50,8 +50,8 @@ class ChangeTurnTest extends Specification {
         when: "Black plays(4,0)"
         field.addMovePlayer(player2, new Dot(4,0))
         then: "It is still black to move"
-        field.whoCanMove.get(player2.getId())
-        !field.whoCanMove.get(player1.getId())
+        field.currentPlayer == player2
+        field.currentPlayer != player1
     }
 
     def "Player continue their turn after hitting endline"() {
@@ -66,8 +66,8 @@ class ChangeTurnTest extends Specification {
         when: "White plays(3,5)"
         field.addMovePlayer(player1, new Dot(3,5))
         then: "It is still white to move"
-        !field.whoCanMove.get(player2.getId())
-        field.whoCanMove.get(player1.getId())
+        field.currentPlayer != player2
+        field.currentPlayer == player1
     }
 
 }
