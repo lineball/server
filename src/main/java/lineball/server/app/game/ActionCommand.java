@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 class ActionCommand {
 
-    ActionType type;
-    int x;
-    int y;
+    private ActionType type;
+    private int x;
+    private int y;
 }

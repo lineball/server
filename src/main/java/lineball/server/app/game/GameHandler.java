@@ -3,6 +3,7 @@ package lineball.server.app.game;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lineball.server.domain.GameFacade;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.support.SecurityContextProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketSession;
@@ -24,7 +25,7 @@ public class GameHandler implements WebSocketHandler {
                 .doOnNext(m -> {
                     try {
                         ActionCommand action = mapper.readValue(m.getPayloadAsText(), ActionCommand.class);
-                        gameFacade.makeMove(action.getX(), action.getY(), action.getType().name());
+                        gameFacade.makeMove(action.getX(), action.getY(), action.getType().name(), "tadzio");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
