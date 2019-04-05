@@ -1,9 +1,9 @@
-package lineball.server.app.game;
+package lineball.server.domain.game.command;
 
 import lombok.Data;
 
 @Data
-class ActionCommand {
+public class ActionCommand {
 
     private ActionType type;
     private int x;
