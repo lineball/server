@@ -21,7 +21,7 @@ import java.util.Map;
 @Configuration
 public class WebConfig {
 
-    private static final String GAME_END_POINT = "/game/move";
+    private static final String GAME_END_POINT = "/game";
 
     private final GameHandler gameHandler;
 
