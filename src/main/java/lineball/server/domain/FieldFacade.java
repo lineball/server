@@ -21,18 +21,21 @@ public class FieldFacade {
     public void enter(UUID fieldId, UUID playerId) {
         Field field = fieldRepository.getById(fieldId)
                 .orElseThrow(() -> new DomainException("Field not found"));
-        field.enter(new Player(playerId));
+
+        fieldRepository.save(field.enter(new Player(playerId)));
     }
 
     public void readyToPlay(UUID playerId) {
         Field field = fieldRepository.getByPlayerId(playerId)
                 .orElseThrow(() -> new DomainException("Field not found"));
-        field.readyToStart(playerId);
+
+        fieldRepository.save(field.readyToStart(playerId));
     }
 
     public void startGame(UUID playerId) {
         Field field = fieldRepository.getByPlayerId(playerId)
                 .orElseThrow(() -> new DomainException("Field not found"));
-        field.startGame(playerId);
+
+        fieldRepository.save(field.startGame(playerId));
     }
 }

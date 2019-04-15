@@ -38,7 +38,29 @@ class InitGameTest extends Specification {
         when: "first player (white) init game"
         fieldFacade.startGame(whiteId)
 
-        then: "an exception is thrown - cannot init game without second player"
+        then: "an exception is thrown - cannot init game without second player ready"
+        thrown DomainException
+    }
+
+    def "Players must be ready to play to start the game"() {
+        given: "new field is created"
+        def fieldId = UUID.randomUUID()
+        fieldFacade.newField(fieldId)
+
+        and: "first and second player enter the field"
+        def whiteId = UUID.randomUUID()
+        def blackId = UUID.randomUUID()
+
+        fieldFacade.enter(fieldId, whiteId)
+        fieldFacade.enter(fieldId, blackId)
+
+        and: "first player (white) is ready to play"
+        fieldFacade.readyToPlay(whiteId)
+
+        when: "first player (white) init game"
+        fieldFacade.startGame(whiteId)
+
+        then: "an exception is thrown - cannot init game without second player ready"
         thrown DomainException
     }
 

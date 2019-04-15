@@ -1,15 +1,31 @@
 package lineball.server.domain;
 
-import lombok.Getter;
-
 import java.util.UUID;
 
 public class Player {
 
-    @Getter
-    private UUID id;
+    private final UUID id;
+    private final boolean readyToPlay;
 
-    public Player(UUID id) {
+    Player(UUID id) {
         this.id = id;
+        this.readyToPlay = false;
+    }
+
+    Player(UUID id, boolean readyToPlay) {
+        this.id = id;
+        this.readyToPlay = readyToPlay;
+    }
+
+    public boolean is(UUID id) {
+       return this.id.equals(id);
+    }
+
+    public Player readyToPlay() {
+        return new Player(this.id, true);
+    }
+
+    public boolean isReady() {
+        return readyToPlay;
     }
 }
