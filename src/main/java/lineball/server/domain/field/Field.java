@@ -17,13 +17,11 @@ public class Field {
     private final Option<Player> white;
     private final Option<Player> black;
 
-    public Field(UUID id) {
-        this.id = id;
-        white = none();
-        black = none();
+    public Field(final UUID id) {
+        this(id, none(), none());
     }
 
-    private Field(UUID id, Option<Player> white, Option<Player> black) {
+    private Field(final UUID id, final Option<Player> white,final Option<Player> black) {
         this.id = id;
         this.white = white;
         this.black = black;
@@ -39,18 +37,18 @@ public class Field {
         return new Field(this.id, white, some(player));
     }
 
-    public Field readyToStart(UUID playerId) {
+    public Field readyToStart(final UUID playerId) {
         var maybeWhite = white.filter(isPlayer(playerId)).map(Player::readyToPlay);
         var maybeBlack = black.filter(isPlayer(playerId)).map(Player::readyToPlay);
         return new Field(this.id, maybeWhite.orElse(white) , maybeBlack.orElse(black));
     }
 
-    public Field startGame(UUID playerId) {
+    public Field startGame(final UUID playerId) {
         var field = readyToStart(playerId);
         return field.startGame();
     }
 
-    public boolean hasPlayerOn(UUID playerId) {
+    public boolean hasPlayerOn(final UUID playerId) {
         return white.exists(isPlayer(playerId)) || black.exists(isPlayer(playerId));
     }
 
@@ -61,7 +59,7 @@ public class Field {
         return this;
     }
 
-    private Predicate<Player> isPlayer(UUID playerId) {
+    private Predicate<Player> isPlayer(final UUID playerId) {
         return player -> player.is(playerId);
     }
 }

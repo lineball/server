@@ -7,12 +7,11 @@ public class Player {
     private final UUID id;
     private final boolean readyToPlay;
 
-    Player(UUID id) {
-        this.id = id;
-        this.readyToPlay = false;
+    Player(final UUID id) {
+        this(id,false);
     }
 
-    Player(UUID id, boolean readyToPlay) {
+    private Player(final UUID id,final boolean readyToPlay) {
         this.id = id;
         this.readyToPlay = readyToPlay;
     }
