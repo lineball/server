@@ -5,40 +5,67 @@ import lineball.server.persistence.memory.GameInMemoryRepository
 import spock.lang.Specification
 
 class InitGameTest extends Specification {
-    FieldFacade fieldFacade = setUpFieldFacade()
+
+    GameFacade gameFacade = setUpFieldFacade()
 
     def "Game starts with two players"() {
-        given: "New field is created"
-        def fieldId = UUID.randomUUID()
-        fieldFacade.newField(fieldId)
+        given: "New game is created"
+        def gameId = UUID.randomUUID()
+        gameFacade.createGame(gameId)
 
-        and: "first and second player enter the field"
+        and: "first and second player enter the game"
         def whiteId = UUID.randomUUID()
         def blackId = UUID.randomUUID()
 
-        fieldFacade.enter(fieldId, whiteId)
-        fieldFacade.enter(fieldId, blackId)
+        gameFacade.enter(gameId, whiteId)
+        gameFacade.enter(gameId, blackId)
 
-        when: "first player (white) init game"
-        fieldFacade.readyToPlay(whiteId)
+        and: "first player (white) init game"
+        gameFacade.readyToPlay(gameId, whiteId)
 
-        then: "second player can start game"
-        notThrown(fieldFacade.startGame(blackId))
+        when: "second player can start game and field to play is created"
+        def field = gameFacade.startGame(gameId, blackId)
+
+        then: "field contains white and black player"
+        assert field.white.is(whiteId)
+        assert field.black.is(blackId)
     }
 
     def "Single player cannot start game"() {
-        given: "new field is created"
-        def fieldId = UUID.randomUUID()
-        fieldFacade.newField(fieldId)
+        given: "new game is created"
+        def gameId = UUID.randomUUID()
+        gameFacade.createGame(gameId)
 
-        and: "first player enters the field"
+        and: "first player enters the game"
         def whiteId = UUID.randomUUID()
-        fieldFacade.enter(fieldId, whiteId)
+        gameFacade.enter(gameId, whiteId)
 
         when: "first player (white) init game"
-        fieldFacade.startGame(whiteId)
+        gameFacade.startGame(gameId, whiteId)
 
-        then: "an exception is thrown - cannot init game without second player"
+        then: "an exception is thrown - cannot init game without second player ready"
+        thrown DomainException
+    }
+
+    def "Players must be ready to play to start the game"() {
+        given: "new game is created"
+        def gameId = UUID.randomUUID()
+        gameFacade.createGame(gameId)
+
+        and: "first and second player enter the game"
+        def whiteId = UUID.randomUUID()
+        def blackId = UUID.randomUUID()
+
+        gameFacade.enter(gameId, whiteId)
+        gameFacade.enter(gameId, blackId)
+
+        and: "first player (white) is ready to play"
+        gameFacade.readyToPlay(gameId, whiteId)
+
+        when: "first player (white) init game"
+        gameFacade.startGame(gameId, whiteId)
+
+        then: "an exception is thrown - cannot init game without second player ready"
         thrown DomainException
     }
 
@@ -46,7 +73,7 @@ class InitGameTest extends Specification {
         def fieldRepo = new FieldInMemoryRepository()
         def gameRepo = new GameInMemoryRepository()
 
-        return new FieldFacade(fieldRepo, gameRepo)
+        return new GameFacade(fieldRepo, gameRepo)
     }
 
 }

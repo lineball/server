@@ -39,20 +39,23 @@ public class WebConfig {
 
     @Bean
     public HandlerMapping gameHandlerMapping() {
-        Map<String, WebSocketHandler> map = new HashMap<>();
-        map.put(GAME_END_POINT, gameHandler);
+        //handlers
+        var map = Map.of(GAME_END_POINT, gameHandler);
 
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        var corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin(CorsConfiguration.ALL);
 
-        Map<String, CorsConfiguration> corsConfigurationMap = new HashMap<>();
-        corsConfigurationMap.put(GAME_END_POINT, corsConfiguration);
+        var corsMap = Map.of(GAME_END_POINT, corsConfiguration);
 
+        return createUrlHandler(map, corsMap);
+    }
 
-        SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
+    private HandlerMapping createUrlHandler(final Map<String, GameHandler> map,
+                                            final Map<String, CorsConfiguration> corsMap) {
+        var mapping = new SimpleUrlHandlerMapping();
         mapping.setOrder(10); // before annotated controllers
         mapping.setUrlMap(map);
-        mapping.setCorsConfigurations(corsConfigurationMap);
+        mapping.setCorsConfigurations(corsMap);
         return mapping;
     }
 }

@@ -1,6 +1,7 @@
 package lineball.server.app.game;
 
-import lineball.server.domain.GameFacade;
+import lineball.server.domain.FieldFacade;
+import lineball.server.persistence.memory.FieldInMemoryRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfig {
 
     @Bean
-    public GameFacade getGameFacade() {
-        return new GameFacade();
+    public FieldFacade getGameFacade() {
+        return new FieldFacade(new FieldInMemoryRepository());
     }
 }
