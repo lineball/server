@@ -8,8 +8,6 @@ public interface FieldRepository {
 
     Optional<Field> getById(UUID id);
 
-    Optional<Field> getByPlayerId(UUID playerId);
-
     Collection<Field> findAll();
 
     void save(Field field);
