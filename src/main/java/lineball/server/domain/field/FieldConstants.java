@@ -1,4 +1,4 @@
-package lineball.server.domain;
+package lineball.server.domain.field;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

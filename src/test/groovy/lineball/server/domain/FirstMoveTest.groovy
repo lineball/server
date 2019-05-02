@@ -15,7 +15,7 @@ class FirstMoveTest extends Specification {
         Field field = new Field(uuidField)
         field.enter(player1)
         field.enter(player2)
-        field.startGame(player1.getId())
+        field.startGame()
         def initDot = new Dot(1,1)
         and: "game starts"
         when: "first player make move - direction 1"

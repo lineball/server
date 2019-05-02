@@ -1,13 +1,16 @@
 package lineball.server.domain.dot;
 
-import lineball.server.domain.DomainException;
 import lineball.server.domain.exception.DeadDotException;
+import lineball.server.domain.exception.DomainException;
 import lineball.server.domain.exception.GoalDotException;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
-import static lineball.server.domain.FieldConstants.*;
+import static lineball.server.domain.field.FieldConstants.*;
 
 @Getter
 @EqualsAndHashCode(exclude = "dots")

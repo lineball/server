@@ -1,6 +1,7 @@
 package lineball.server.domain
 
 import lineball.server.domain.dot.Dot
+import lineball.server.domain.exception.DomainException
 import lineball.server.domain.field.Field
 import spock.lang.Specification
 
@@ -18,7 +19,7 @@ class DeadEndTest extends Specification {
         given: "Game went (0,0)/(1,1)/(2,2),(3,3)/(3,4). White to move."
         field.enter(player1)
         field.enter(player2)
-        field.startGame(player1.getId())
+        field.startGame()
         field.addMovePlayer(player1, new Dot(1,1))
         field.addMovePlayer(player2, new Dot(2,2))
         field.addMovePlayer(player1, new Dot(3,3))
@@ -34,7 +35,7 @@ class DeadEndTest extends Specification {
         given: "Game went (0,0)/(1,0)/(2,0)/(3,0)/(4,1),(3,2)/(3,1). Black to move."
         field.enter(player1)
         field.enter(player2)
-        field.startGame(player1.getId())
+        field.startGame()
         field.addMovePlayer(player1, new Dot(1,0))
         field.addMovePlayer(player2, new Dot(2,0))
         field.addMovePlayer(player1, new Dot(3,0))
@@ -52,7 +53,7 @@ class DeadEndTest extends Specification {
         given: "Game went (0,0)/(0,1)/(1,1)/(0,0),(1,0)/(1,-1)/(0,0),(0,-1)/(-1,-1)/(0,0),(-1,0)/(-1,1). White to move."
         field.enter(player1)
         field.enter(player2)
-        field.startGame(player1.getId())
+        field.startGame()
         field.addMovePlayer(player1, new Dot(0,1))
         field.addMovePlayer(player2, new Dot(1,1))
         field.addMovePlayer(player1, new Dot(0,0))

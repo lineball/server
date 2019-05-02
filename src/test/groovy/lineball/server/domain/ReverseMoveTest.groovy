@@ -1,6 +1,7 @@
 package lineball.server.domain
 
 import lineball.server.domain.dot.Dot
+import lineball.server.domain.exception.DomainException
 import lineball.server.domain.field.Field
 import spock.lang.Specification
 
@@ -17,7 +18,7 @@ class ReverseMoveTest extends Specification {
         given: "Game went (0,0)/(0,1)/(1,1). White to move."
         field.enter(player1)
         field.enter(player2)
-        field.startGame(player1.getId())
+        field.startGame()
         field.addMovePlayer(player1, new Dot(0,1))
         field.addMovePlayer(player2, new Dot(1,1))
         when: "White plays(0,0)"
@@ -33,7 +34,7 @@ class ReverseMoveTest extends Specification {
         given: "Game went (0,0)/(0,1). Black to move."
         field.enter(player1)
         field.enter(player2)
-        field.startGame(player1.getId())
+        field.startGame()
         field.addMovePlayer(player1, new Dot(0,1))
         when: "Black wants to reverse move"
         field.revertMovePlayer(player2)

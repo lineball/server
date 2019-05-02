@@ -2,6 +2,7 @@ package lineball.server.domain;
 
 import lineball.server.domain.dot.Dot;
 import lineball.server.domain.exception.DeadDotException;
+import lineball.server.domain.exception.DomainException;
 import lineball.server.domain.exception.GoalDotException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

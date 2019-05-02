@@ -1,4 +1,4 @@
-package lineball.server.domain;
+package lineball.server.domain.exception;
 
 public class DomainException extends RuntimeException {
 

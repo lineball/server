@@ -1,5 +1,6 @@
 package lineball.server.domain
 
+import lineball.server.domain.exception.DomainException
 import lineball.server.domain.field.FieldFacade
 import lineball.server.persistence.memory.FieldInMemoryRepository
 import spock.lang.Specification

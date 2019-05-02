@@ -1,10 +1,10 @@
 package lineball.server.domain.field;
 
-import lineball.server.domain.DomainException;
 import lineball.server.domain.Path;
 import lineball.server.domain.Player;
 import lineball.server.domain.PlayerColor;
 import lineball.server.domain.dot.Dot;
+import lineball.server.domain.exception.DomainException;
 import lombok.Getter;
 
 import java.util.Objects;
@@ -41,7 +41,7 @@ public class Field {
 
     }
 
-    public void startGame(UUID playerId) {
+    public void startGame() {
         if (Objects.isNull(white) || Objects.isNull(black)) {
             throw new DomainException("Cannot init game without second player");
         }

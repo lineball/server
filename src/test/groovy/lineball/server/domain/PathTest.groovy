@@ -1,6 +1,7 @@
 package lineball.server.domain
 
 import lineball.server.domain.dot.Dot
+import lineball.server.domain.exception.DomainException
 import spock.lang.Specification
 
 class PathTest extends Specification {

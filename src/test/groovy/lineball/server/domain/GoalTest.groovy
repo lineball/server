@@ -1,6 +1,7 @@
 package lineball.server.domain
 
 import lineball.server.domain.dot.Dot
+import lineball.server.domain.exception.DomainException
 import lineball.server.domain.field.Field
 import spock.lang.Specification
 
@@ -17,7 +18,7 @@ class GoalTest extends Specification {
         given: "Game went (0,0)/(0,1)/(0,2)/(0,3)/(0,4). White to move."
         field.enter(player1)
         field.enter(player2)
-        field.startGame(player1.getId())
+        field.startGame()
         field.addMovePlayer(player1, new Dot(0,1))
         field.addMovePlayer(player2, new Dot(0,2))
         field.addMovePlayer(player1, new Dot(0,3))
@@ -34,7 +35,7 @@ class GoalTest extends Specification {
         given: "Game went (0,0)/(0,-1)/(0,-2)/(0,-3)/(0,-4)/(0,-5). Black to move."
         field.enter(player1)
         field.enter(player2)
-        field.startGame(player1.getId())
+        field.startGame()
         field.addMovePlayer(player1, new Dot(0,-1))
         field.addMovePlayer(player2, new Dot(0,-2))
         field.addMovePlayer(player1, new Dot(0,-3))

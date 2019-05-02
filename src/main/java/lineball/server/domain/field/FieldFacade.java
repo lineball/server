@@ -1,17 +1,18 @@
 package lineball.server.domain.field;
 
 import lineball.server.api.DotDto;
-import lineball.server.domain.DomainException;
 import lineball.server.domain.Player;
 import lineball.server.domain.dot.Dot;
 import lombok.AllArgsConstructor;
 
 import java.util.UUID;
 
+import static lineball.server.domain.exception.ExceptionConstant.FIELD_NOT_FOUND;
+
 @AllArgsConstructor
 public class FieldFacade {
 
-    private final FieldRepository fieldRepository;
+  private final FieldRepository fieldRepository;
 
     public void newField(UUID fieldId) {
         Field field = new Field(fieldId);
@@ -19,21 +20,20 @@ public class FieldFacade {
     }
 
     public void enter(UUID fieldId, UUID playerId) {
-        Field field = fieldRepository.getById(fieldId)
-                .orElseThrow(() -> new DomainException("Field not found"));
+        Field field = getFieldById(fieldId);
         field.enter(new Player(playerId));
     }
 
     public void readyToPlay(UUID playerId) {
         Field field = fieldRepository.getByPlayerId(playerId)
-                .orElseThrow(() -> new DomainException("Field not found"));
+                .orElseThrow(FIELD_NOT_FOUND);
         field.readyToStart(playerId);
     }
 
     public void startGame(UUID playerId) {
         Field field = fieldRepository.getByPlayerId(playerId)
-                .orElseThrow(() -> new DomainException("Field not found"));
-        field.startGame(playerId);
+                .orElseThrow(FIELD_NOT_FOUND);
+        field.startGame();
     }
 
     public void addMovePlayer(UUID fieldId, Player player, DotDto dot) {
@@ -53,6 +53,6 @@ public class FieldFacade {
 
     private Field getFieldById(UUID fieldId) {
         return fieldRepository.getById(fieldId)
-                      .orElseThrow(() -> new DomainException("Field not found"));
+                      .orElseThrow(FIELD_NOT_FOUND);
     }
 }
