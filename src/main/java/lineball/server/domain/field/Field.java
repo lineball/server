@@ -10,15 +10,13 @@ import lombok.Getter;
 import java.util.Objects;
 import java.util.UUID;
 
+@Getter
 public class Field {
 
-    @Getter
     private UUID id;
     private Player white;
     private Player black;
-    @Getter
     private Player currentPlayer;
-    @Getter
     private Path path;
 
     public Field(UUID id) {

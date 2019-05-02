@@ -1,7 +1,7 @@
 package lineball.server.domain
 
+import lineball.server.domain.field.FieldFacade
 import lineball.server.persistence.memory.FieldInMemoryRepository
-import lineball.server.persistence.memory.GameInMemoryRepository
 import spock.lang.Specification
 
 class InitGameTest extends Specification {
@@ -44,9 +44,8 @@ class InitGameTest extends Specification {
 
     def setUpFieldFacade() {
         def fieldRepo = new FieldInMemoryRepository()
-        def gameRepo = new GameInMemoryRepository()
 
-        return new FieldFacade(fieldRepo, gameRepo)
+        return new FieldFacade(fieldRepo)
     }
 
 }
