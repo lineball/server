@@ -2,6 +2,7 @@ package lineball.server.domain;
 
 import lineball.server.api.DotDto;
 import lineball.server.domain.field.FieldFacade;
+import lineball.server.domain.game.command.ActionCommand;
 import lombok.AllArgsConstructor;
 
 import java.util.UUID;
@@ -32,4 +33,10 @@ public class GameFacade {
   public boolean hasPlayerOn(UUID fieldId, UUID playerId) {
     return fieldFacade.hasPlayerOn(fieldId, playerId);
   }
+
+    public void makeMove(ActionCommand command, UUID playerId) {
+        System.out.println(command.getX());
+        System.out.println(command.getY());
+        System.out.println(command.getType());
+    }
 }
