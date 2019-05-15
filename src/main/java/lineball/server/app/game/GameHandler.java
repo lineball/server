@@ -1,6 +1,7 @@
 package lineball.server.app.game;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lineball.server.app.game.dto.GameDto;
 import lineball.server.domain.GameFacade;
 import lineball.server.domain.game.command.ActionCommand;
 import lineball.server.persistence.mongodb.GameRepository;
@@ -39,14 +40,14 @@ public class GameHandler implements WebSocketHandler {
                 .then();
 
 
-        GameStateDto dto = new GameStateDto("x", 5, 6);
+        GameDto dto = new GameDto("x", 5, 6);
 
         Mono<Void> then = gameRepository.save(dto).then();
 
-        gameRepository.findAll().log().map(GameStateDto::getId)
+        gameRepository.findAll().log().map(GameDto::getId)
                 .subscribe(System.out::println);
 
-        Flux<GameStateDto> source = gameRepository.findAll();
+        Flux<GameDto> source = gameRepository.findAll();
         return webSocketSession.send(source
                 .map(msg -> "RECEIVED ON SERVER xd :: " + msg.getX())
                 .map(webSocketSession::textMessage)

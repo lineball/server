@@ -1,19 +1,22 @@
-package lineball.server.app.game;
+package lineball.server.app.game.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+import java.util.Map;
+
 @Document(collection = "lineball")
 @Data
 @AllArgsConstructor
-public class GameStateDto {
+public class GameDto {
 
     @Id
     private String id;
 
-    private int x;
+    private Map<PlayerType, String> players;
 
-    private int y;
+    private List<TurnDto> state;
 }
