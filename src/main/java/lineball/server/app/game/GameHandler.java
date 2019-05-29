@@ -1,7 +1,10 @@
 package lineball.server.app.game;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lineball.server.app.game.dto.DotDto;
 import lineball.server.app.game.dto.GameDto;
+import lineball.server.app.game.dto.PlayerType;
+import lineball.server.app.game.dto.TurnDto;
 import lineball.server.domain.GameFacade;
 import lineball.server.domain.game.command.ActionCommand;
 import lineball.server.persistence.mongodb.GameRepository;
@@ -13,6 +16,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -39,8 +45,11 @@ public class GameHandler implements WebSocketHandler {
                 })
                 .then();
 
+        Map<PlayerType, String> players = Map.of(PlayerType.WHITE, "xd", PlayerType.BLACK, "dd");
 
-        GameDto dto = new GameDto("x", 5, 6);
+        DotDto dto1 = new DotDto(1, 2);
+        TurnDto turnDto = new TurnDto(PlayerType.BLACK, List.of(dto1));
+        GameDto dto = new GameDto("x", players, List.of(turnDto));
 
         Mono<Void> then = gameRepository.save(dto).then();
 
@@ -49,7 +58,7 @@ public class GameHandler implements WebSocketHandler {
 
         Flux<GameDto> source = gameRepository.findAll();
         return webSocketSession.send(source
-                .map(msg -> "RECEIVED ON SERVER xd :: " + msg.getX())
+                .map(msg -> "RECEIVED ON SERVER xd :: " + msg.getId())
                 .map(webSocketSession::textMessage)
         );
     }
