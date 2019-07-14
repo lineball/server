@@ -7,9 +7,9 @@ import lombok.Getter;
 import java.util.Objects;
 import java.util.UUID;
 
+@Getter
 public class Field {
 
-    @Getter
     private UUID id;
     private Player white;
     private Player black;
@@ -37,7 +37,6 @@ public class Field {
             throw new DomainException("Cannot init game without second player");
         }
     }
-
     public boolean hasPlayerOn(UUID playerId) {
         return (Objects.nonNull(white) && white.getId().equals(playerId)) ||
                 (Objects.nonNull(black) && black.getId().equals(playerId));

@@ -1,5 +1,7 @@
-package lineball.server.domain;
+package lineball.server.domain.field;
 
+import lineball.server.domain.DomainException;
+import lineball.server.domain.Player;
 import lineball.server.domain.field.Field;
 import lineball.server.domain.field.FieldRepository;
 import lineball.server.domain.game.GameRepository;
@@ -11,7 +13,6 @@ import java.util.UUID;
 public class FieldFacade {
 
     private final FieldRepository fieldRepository;
-    private final GameRepository gameRepository;
 
     public void newField(UUID fieldId) {
         Field field = new Field(fieldId);
