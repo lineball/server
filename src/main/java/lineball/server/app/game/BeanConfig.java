@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BeanConfig {
-    @Bean
-    public GameFacade getGameFacade() {
-        return new GameFacade(new GameInMemoryRepository());
-    }
+//    @Bean
+//    public GameFacade getGameFacade() {
+//        return new GameFacade(new Evenew GameInMemoryRepository());
+//    }
 }

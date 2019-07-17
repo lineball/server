@@ -9,13 +9,12 @@ import java.util.Optional;
 @Value
 public class Dots {
 
-    Coordinate size;
+    Size size;
     Map<Coordinate, Dot> dotList;
 
-    public Dots(Coordinate size) {
+    public Dots(Size size) {
         this.size = size;
         this.dotList = new HashMap<>();
-
     }
 
     public Dot getByCoordinates(Coordinate coordinate) {
@@ -24,7 +23,8 @@ public class Dots {
     }
 
     private Dot createDot(Coordinate coordinate) {
-        Dot dot = new FreshDot(coordinate, 8);
+        size.getAvailable(coordinate);
+        Dot dot = new FreshDot(coordinate, size.getAvailable(coordinate));
         dotList.put(coordinate, dot);
         return dot;
     }

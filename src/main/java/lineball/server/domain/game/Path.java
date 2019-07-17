@@ -8,23 +8,24 @@ import lombok.Value;
 import java.util.LinkedList;
 
 @Value
-public class Path {
+class Path {
     @Getter
     LinkedList<Move> moves;
     Dot start;
 
-    public Path(Dot start) {
+    Path(Dot start) {
         moves = new LinkedList<>();
         this.start = start;
     }
 
-    public void addMove(Dot to, PlayerType playerType) {
+    void addMove(Dot to, PlayerType playerType) {
         Dot from = getFrom();
 
         if (!moves.isEmpty() && from.getAvailable() == 7 && moves.getLast().player.equals(playerType)) {
-            throw new DomainException("a");
+            throw new DomainException("Wrong player");
         }
         moves.add(new Move(from, to, playerType));
+
     }
 
     private Dot getFrom() {
