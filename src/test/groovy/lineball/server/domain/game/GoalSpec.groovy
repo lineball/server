@@ -25,7 +25,7 @@ class GoalSpec extends Specification implements SampleBuilder {
                 .filter({ e -> e.eventType == GoalScoredEvent.type })
                 .findFirst() as Optional<GoalScoredEvent>
         goal.isPresent()
-        goal.get().playerType == PlayerType.WHITE
+        goal.get().goalForPlayer == PlayerType.WHITE
     }
 
     def "Black wins after scoring goal"() {
@@ -42,7 +42,7 @@ class GoalSpec extends Specification implements SampleBuilder {
                 .filter({ e -> e.eventType == GoalScoredEvent.type })
                 .findFirst() as Optional<GoalScoredEvent>
         goal.isPresent()
-        goal.get().playerType == PlayerType.BLACK
+        goal.get().goalForPlayer == PlayerType.BLACK
     }
 
 }

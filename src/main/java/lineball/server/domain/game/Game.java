@@ -1,10 +1,9 @@
 package lineball.server.domain.game;
 
 import lineball.server.domain.DomainEvent;
-import lineball.server.domain.Player;
 import lineball.server.domain.game.dot.*;
-import lineball.server.domain.field.Field;
 import lineball.server.domain.game.command.ActionCommand;
+import lineball.server.domain.game.events.DeadEndEvent;
 import lineball.server.domain.game.events.GoalScoredEvent;
 import lombok.Getter;
 
@@ -17,11 +16,10 @@ public class Game {
 
     @Getter
     private final UUID id;
+    @Getter
     private final UUID fieldId;
     @Getter
-    private final Player white;
-    @Getter
-    private final Player black;
+    private final GameStatus status;
     private final Path path;
     private final Dots dots;
     private final Size size;
@@ -29,34 +27,27 @@ public class Game {
     @Getter
     private final List<DomainEvent> events;
 
-    public Game(Field field, Dot start) {
+    public Game(UUID fieldId) {
         this.id = UUID.randomUUID();
-        this.fieldId = field.getId();
-        this.white = field.getWhite();
-        this.black = field.getBlack();
+        this.fieldId = fieldId;
         this.size = new Size(4, 5);
         this.dots = new Dots(size);
         this.path = new Path(dots.getByCoordinates(new Coordinate(0, 0)));
         this.events = new ArrayList<>();
+        this.status = GameStatus.ACTIVE;
     }
 
-    public void move(ActionCommand action, UUID playerId) {
+    public void move(ActionCommand action, PlayerType type) {
         Coordinate coordinate = new Coordinate(action.getX(), action.getY());
-
-        PlayerType type;
-        if (playerId.equals(black.getId())) {
-            type = PlayerType.BLACK;
-        } else if (playerId.equals(white.getId())) {
-            type = PlayerType.WHITE;
-        } else {
-            throw new RuntimeException();
-        }
-
 
         path.addMove(dots.getByCoordinates(coordinate), type);
 
         size.lostGoal(coordinate)
                 .ifPresent(t -> events.add(new GoalScoredEvent(this.id, t)));
+
+        if (path.getMoves().getLast().getTo().getAvailable() == 0) {
+            events.add(new DeadEndEvent(this.id, type.getOpposite()));
+        }
     }
 
 

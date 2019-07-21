@@ -6,5 +6,5 @@ public interface GameRepository {
 
     void save(Game game);
 
-    Game getByPlayerId(UUID player);
+    Game getActiveByFieldId(UUID fieldId);
 }

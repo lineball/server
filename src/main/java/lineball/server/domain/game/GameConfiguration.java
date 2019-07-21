@@ -1,6 +1,7 @@
 package lineball.server.domain.game;
 
 import lineball.server.domain.EventStoreRepository;
+import lineball.server.domain.field.FieldFacade;
 import lineball.server.persistence.memory.EventStoreInMemoryRepository;
 import lineball.server.persistence.memory.GameInMemoryRepository;
 import lombok.Getter;
@@ -16,7 +17,7 @@ public class GameConfiguration {
         this.eventStoreRepository = new EventStoreInMemoryRepository();
     }
 
-    GameFacade gameFacade() {
-        return new GameFacade(eventStoreRepository, new GameInMemoryRepository());
+    GameFacade gameFacade(FieldFacade fieldFacade) {
+        return new GameFacade(fieldFacade, eventStoreRepository, new GameInMemoryRepository());
     }
 }

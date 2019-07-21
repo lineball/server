@@ -15,12 +15,12 @@ public class GoalScoredEvent implements DomainEvent {
     UUID aggregateId;
     String eventType;
     LocalDateTime createdAt;
-    PlayerType playerType;
+    PlayerType goalForPlayer;
 
     public GoalScoredEvent(UUID aggregateId, PlayerType playerType) {
         this.aggregateId = aggregateId;
         this.eventType = type;
         this.createdAt = LocalDateTime.now();
-        this.playerType = playerType;
+        this.goalForPlayer = playerType;
     }
 }

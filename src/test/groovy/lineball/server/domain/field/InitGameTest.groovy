@@ -1,29 +1,25 @@
 package lineball.server.domain.field
 
 import lineball.server.domain.DomainException
-import lineball.server.persistence.memory.FieldInMemoryRepository
 import spock.lang.Specification
 
 class InitGameTest extends Specification {
-    FieldFacade fieldFacade = setUpFieldFacade()
+    FieldFacade fieldFacade = new FieldConfiguration().fieldFacade()
 
     def "Game starts with two players"() {
         given: "New field is created"
         def fieldId = UUID.randomUUID()
         fieldFacade.newField(fieldId)
 
-        and: "first and second player enter the field"
+        when: "first and second player enter the field"
         def whiteId = UUID.randomUUID()
         def blackId = UUID.randomUUID()
 
         fieldFacade.enter(fieldId, whiteId)
         fieldFacade.enter(fieldId, blackId)
 
-        when: "first player (white) init game"
-        fieldFacade.readyToPlay(whiteId)
-
-        then: "second player can start game"
-        notThrown(fieldFacade.startGame(blackId))
+        then: "field is ready to play on it"
+        fieldFacade.readyToPlay(fieldId)
     }
 
     def "Single player cannot start game"() {
@@ -31,21 +27,11 @@ class InitGameTest extends Specification {
         def fieldId = UUID.randomUUID()
         fieldFacade.newField(fieldId)
 
-        and: "first player enters the field"
+        when: "first player enters the field"
         def whiteId = UUID.randomUUID()
         fieldFacade.enter(fieldId, whiteId)
 
-        when: "first player (white) init game"
-        fieldFacade.startGame(whiteId)
-
-        then: "an exception is thrown - cannot init game without second player"
-        thrown DomainException
+        then: "field is not ready to play on it"
+        !fieldFacade.readyToPlay(fieldId)
     }
-
-    def setUpFieldFacade() {
-        def fieldRepo = new FieldInMemoryRepository()
-
-        return new FieldFacade(fieldRepo)
-    }
-
 }

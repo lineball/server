@@ -10,17 +10,17 @@ import java.util.UUID;
 @Value
 public class DeadEndEvent implements DomainEvent {
 
-    private static final String type = "game.dead.end";
+    public static final String type = "game.dead.end";
 
     UUID aggregateId;
     String eventType;
     LocalDateTime createdAt;
-    PlayerType playerType;
+    PlayerType playerWin;
 
     public DeadEndEvent(UUID gameId, PlayerType playerType) {
         this.aggregateId = gameId;
         this.eventType = type;
         this.createdAt = LocalDateTime.now();
-        this.playerType = playerType;
+        this.playerWin = playerType;
     }
 }
