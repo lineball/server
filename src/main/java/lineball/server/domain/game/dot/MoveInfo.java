@@ -6,9 +6,12 @@ import lombok.Value;
 
 import java.util.Optional;
 
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+
 
 @Value
-public class Size {
+public class MoveInfo {
     int xBorder;
     int yBorder;
     int goalBorder = 1;
@@ -18,23 +21,21 @@ public class Size {
         if (isGoal(coordinate)) {
             return 1;
         }
-        int absX = Math.abs(coordinate.getX());
-        int absY = Math.abs(coordinate.getY());
-        if (absX > xBorder || absY > yBorder) {
+        if (coordinate.absX() > xBorder || coordinate.absY() > yBorder) {
             throw new DomainException("Coordinate points outside the border");
         }
-        if (absX == xBorder) {
-            if (absY == yBorder) {
+        if (coordinate.absX() == xBorder) {
+            if (coordinate.absY() == yBorder) {
                 return 1;
             }
             return 3;
         }
 
-        if (absY == yBorder) {
-            if (absX == 0) {
+        if (coordinate.absY() == yBorder) {
+            if (coordinate.absX() == 0) {
                 return 8;
             }
-            if (absX == 1) {
+            if (coordinate.absX() == 1) {
                 return 5;
             }
             return 3;
@@ -43,20 +44,19 @@ public class Size {
         return Dot.MAX_AVAILABLE;
     }
 
-    private boolean isGoal(Coordinate coordinate) {
-        return coordinate.absY() == yBorder + 1 && coordinate.absX() <= goalBorder;
-    }
-
-    public Optional<PlayerType> lostGoal(Coordinate coordinate) {
-        boolean isGol = isGoal(coordinate);
-        if (!isGol) {
-            return Optional.empty();
+    Optional<PlayerType> lostGoal(Coordinate coordinate) {
+        if (!isGoal(coordinate)) {
+            return empty();
         }
 
         if (coordinate.getY() > 0) {
-            return Optional.of(PlayerType.WHITE);
+            return of(PlayerType.WHITE);
         } else {
-            return Optional.of(PlayerType.BLACK);
+            return of(PlayerType.BLACK);
         }
+    }
+
+    private boolean isGoal(Coordinate coordinate) {
+        return coordinate.absY() == yBorder + 1 && coordinate.absX() <= goalBorder;
     }
 }

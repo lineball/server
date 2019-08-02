@@ -1,14 +1,12 @@
 package lineball.server.domain.game
 
 import lineball.server.domain.DomainException
-import spock.lang.Specification
 
-class ChangeTurnSpec extends Specification implements SampleBuilder {
-
-    GameFacade facade = new GameConfiguration().gameFacade()
+class ChangeTurnSpec extends GameFacadeTemplate {
 
     def "Turn changes after finishing in dot that was not used before"() {
         given: "White plays(0,1)"
+        startGame()
         facade.makeMove(commandMove(0, 1), white)
         when: "White plays(0,2)"
         facade.makeMove(commandMove(0, 2), white)
@@ -18,6 +16,7 @@ class ChangeTurnSpec extends Specification implements SampleBuilder {
 
     def "Player continue their turn after hitting dot that was used before"() {
         given: "Game went (0,0)/(0,1)/(1,1). White to move."
+        startGame()
         facade.makeMove(commandMove(0, 1), white)
         facade.makeMove(commandMove(1, 1), black)
         when: "White plays(0,0)"
@@ -29,6 +28,7 @@ class ChangeTurnSpec extends Specification implements SampleBuilder {
 
     def "Player continue their turn after hitting sideline"() {
         given: "Game went (0,0)/(1,0)/(2,0)/(3,0). Black to move."
+        startGame()
         facade.makeMove(commandMove(1, 0), white)
         facade.makeMove(commandMove(2, 0), black)
         facade.makeMove(commandMove(3, 0), white)
@@ -39,8 +39,9 @@ class ChangeTurnSpec extends Specification implements SampleBuilder {
         noExceptionThrown()
     }
 
-    def "Player continue their turn after hitting endline"() {
+    def "Player continue their turn after hitting end line"() {
         given: "Game went (0,0)/(1,1)/(2,2)/(3,3)/(3,4). White to move."
+        startGame()
         facade.makeMove(commandMove(1, 1), white)
         facade.makeMove(commandMove(2, 2), black)
         facade.makeMove(commandMove(3, 3), white)
@@ -51,5 +52,4 @@ class ChangeTurnSpec extends Specification implements SampleBuilder {
         then: "It is still white to move"
         noExceptionThrown()
     }
-
 }

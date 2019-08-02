@@ -1,26 +1,36 @@
 package lineball.server.persistence.memory;
 
-import lineball.server.domain.DomainEvent;
-import lineball.server.domain.EventStoreRepository;
+import lineball.server.domain.eventstore.DomainEvent;
+import lineball.server.domain.eventstore.EventStoreRepository;
+import lineball.server.domain.eventstore.EventStream;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
+
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
 
 public class EventStoreInMemoryRepository implements EventStoreRepository {
 
-    private final ConcurrentHashMap<UUID, DomainEvent> map = new ConcurrentHashMap<>();
-
+    private final ConcurrentHashMap<UUID, EventStream> map = new ConcurrentHashMap<>();
 
     @Override
-    public List<DomainEvent> findAll() {
-        return new ArrayList<>(map.values());
+    public Optional<EventStream> findByAggregateUUID(UUID uuid) {
+        return ofNullable(map.get(uuid));
     }
 
     @Override
-    public void save(List<DomainEvent> events) {
-        events.forEach(e -> map.put(UUID.randomUUID(), e));
+    public void save(UUID aggregateId, List<DomainEvent> events) {
+        EventStream stream = findByAggregateUUID(aggregateId)
+                .orElseGet(() -> new EventStream(aggregateId));
+        stream.addEvents(events);
+        map.put(aggregateId, stream);
+    }
+
+    @Override
+    public List<DomainEvent> getEventsForAggregate(UUID aggregateId) {
+        return findByAggregateUUID(aggregateId)
+                .map(EventStream::getEvents)
+                .orElse(emptyList());
     }
 }

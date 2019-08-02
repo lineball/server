@@ -1,6 +1,6 @@
 package lineball.server.domain.game.events;
 
-import lineball.server.domain.DomainEvent;
+import lineball.server.domain.eventstore.DomainEvent;
 import lineball.server.domain.game.PlayerType;
 import lombok.Value;
 

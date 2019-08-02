@@ -2,16 +2,18 @@ package lineball.server.domain.game.dot;
 
 import lombok.Value;
 
+import static java.lang.Math.*;
+
 @Value
 public class Coordinate {
     int x;
     int y;
 
-    public int absX() {
-        return Math.abs(x);
+    int absX() {
+        return abs(x);
     }
 
-    public int absY() {
-        return Math.abs(y);
+    int absY() {
+        return abs(y);
     }
 }

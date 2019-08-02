@@ -1,4 +1,4 @@
-package lineball.server.domain;
+package lineball.server.domain.eventstore;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

@@ -8,16 +8,16 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Value
-public class DeadEndEvent implements DomainEvent {
+public class GameEndedEvent implements DomainEvent {
 
-    public static final String type = "game.dead.end";
+    public static final String type = "game.ended";
 
     UUID aggregateId;
     String eventType;
     LocalDateTime createdAt;
     PlayerType playerWin;
 
-    public DeadEndEvent(UUID gameId, PlayerType playerType) {
+    public GameEndedEvent(UUID gameId, PlayerType playerType) {
         this.aggregateId = gameId;
         this.eventType = type;
         this.createdAt = LocalDateTime.now();
