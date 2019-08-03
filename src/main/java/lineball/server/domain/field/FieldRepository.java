@@ -6,9 +6,9 @@ import java.util.UUID;
 
 public interface FieldRepository {
 
-    Optional<Field> getById(UUID id);
+    Field getById(UUID id);
 
-    Optional<Field> getByPlayerId(UUID playerId);
+    Field getByPlayerId(UUID playerId);
 
     Collection<Field> findAll();
 

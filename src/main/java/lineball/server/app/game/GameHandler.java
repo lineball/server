@@ -1,7 +1,7 @@
 package lineball.server.app.game;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lineball.server.domain.GameFacade;
+import lineball.server.domain.game.GameFacade;
 import lineball.server.domain.game.command.ActionCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

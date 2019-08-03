@@ -1,5 +1,6 @@
 package lineball.server.persistence.memory;
 
+import lineball.server.domain.DomainException;
 import lineball.server.domain.field.Field;
 import lineball.server.domain.field.FieldRepository;
 
@@ -14,15 +15,16 @@ public class FieldInMemoryRepository implements FieldRepository {
     private final ConcurrentHashMap<UUID, Field> map = new ConcurrentHashMap<>();
 
     @Override
-    public Optional<Field> getById(UUID id) {
-        return Optional.of(map.get(id));
+    public Field getById(UUID id) {
+        return Optional.of(map.get(id))
+                .orElseThrow(() -> new DomainException("Field not found"));
     }
 
     @Override
-    public Optional<Field> getByPlayerId(UUID playerId) {
+    public Field getByPlayerId(UUID playerId) {
         return map.values().stream()
                 .filter(f -> f.hasPlayerOn(playerId))
-                .findFirst();
+                .findFirst().orElseThrow(() -> new DomainException("asf"));
     }
 
     @Override
